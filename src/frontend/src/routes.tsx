@@ -15,9 +15,11 @@ import { CustomNavigate } from "./customization/components/custom-navigate";
 import { BASENAME } from "./customization/config-constants";
 import {
   ENABLE_CUSTOM_PARAM,
+  ENABLE_EXTERNAL_SKILLS,
   ENABLE_FILE_MANAGEMENT,
   ENABLE_KNOWLEDGE_BASES,
 } from "./customization/feature-flags";
+import { SkillsGuard } from "./components/authorization/skillsGuard";
 import { CustomRoutesStore } from "./customization/utils/custom-routes-store";
 import { CustomRoutesStorePages } from "./customization/utils/custom-routes-store-pages";
 import { AppAuthenticatedPage } from "./pages/AppAuthenticatedPage";
@@ -37,7 +39,10 @@ import MCPServersPage from "./pages/SettingsPage/pages/MCPServersPage";
 import ModelProvidersPage from "./pages/SettingsPage/pages/ModelProvidersPage";
 import MessagesPage from "./pages/SettingsPage/pages/messagesPage";
 import ShortcutsPage from "./pages/SettingsPage/pages/ShortcutsPage";
+import SkillsSettingsPage from "./pages/SettingsPage/pages/SkillsSettingsPage";
 import ViewPage from "./pages/ViewPage";
+
+const SkillsPage = lazy(() => import("./pages/SkillsPage"));
 
 const AdminPage = lazy(() => import("./pages/AdminPage"));
 const LoginAdminPage = lazy(() => import("./pages/AdminPage/LoginPage"));
@@ -157,9 +162,25 @@ const router = createBrowserRouter(
                   />
                   <Route path="shortcuts" element={<ShortcutsPage />} />
                   <Route path="messages" element={<MessagesPage />} />
+                  {ENABLE_EXTERNAL_SKILLS && (
+                    <Route
+                      path="skills"
+                      element={<SkillsSettingsPage />}
+                    />
+                  )}
                   {CustomRoutesStore()}
                 </Route>
                 {CustomRoutesStorePages()}
+                {ENABLE_EXTERNAL_SKILLS && (
+                  <Route
+                    path="skills"
+                    element={
+                      <SkillsGuard>
+                        <SkillsPage />
+                      </SkillsGuard>
+                    }
+                  />
+                )}
                 <Route path="account">
                   <Route path="delete" element={<DeleteAccountPage />}></Route>
                 </Route>

@@ -24,6 +24,7 @@ import { CustomStoreButton } from "@/customization/components/custom-store-butto
 import {
   ENABLE_CUSTOM_PARAM,
   ENABLE_DATASTAX_LANGFLOW,
+  ENABLE_EXTERNAL_SKILLS,
   ENABLE_FILE_MANAGEMENT,
   ENABLE_KNOWLEDGE_BASES,
   ENABLE_MCP_NOTICE,
@@ -358,6 +359,10 @@ const SideBarFoldersButtonsComponent = ({
     _navigate("/assets/knowledge-bases");
   };
 
+  const handleSkillsNavigation = () => {
+    _navigate("/skills");
+  };
+
   return (
     <Sidebar
       collapsible={isMobile ? "offcanvas" : "none"}
@@ -497,6 +502,16 @@ const SideBarFoldersButtonsComponent = ({
               <ForwardedIconComponent name="File" className="h-4 w-4" />
               My Files
             </SidebarMenuButton>
+            {ENABLE_EXTERNAL_SKILLS && (
+              <SidebarMenuButton
+                onClick={handleSkillsNavigation}
+                size="md"
+                className="text-sm"
+              >
+                <ForwardedIconComponent name="Zap" className="h-4 w-4" />
+                Skills
+              </SidebarMenuButton>
+            )}
           </div>
         </SidebarFooter>
       )}

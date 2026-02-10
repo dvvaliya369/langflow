@@ -4,6 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { CustomStoreSidebar } from "@/customization/components/custom-store-sidebar";
 import {
   ENABLE_DATASTAX_LANGFLOW,
+  ENABLE_EXTERNAL_SKILLS,
   ENABLE_LANGFLOW_STORE,
   ENABLE_PROFILE_ICONS,
 } from "@/customization/feature-flags";
@@ -95,6 +96,19 @@ export default function SettingsPage(): JSX.Element {
   if (!ENABLE_DATASTAX_LANGFLOW) {
     const langflowItems = CustomStoreSidebar(true, ENABLE_LANGFLOW_STORE);
     sidebarNavItems.splice(2, 0, ...langflowItems);
+  }
+
+  if (ENABLE_EXTERNAL_SKILLS) {
+    sidebarNavItems.push({
+      title: "External Skills",
+      href: "/settings/skills",
+      icon: (
+        <ForwardedIconComponent
+          name="Zap"
+          className="w-4 flex-shrink-0 justify-start stroke-[1.5]"
+        />
+      ),
+    });
   }
 
   return (
